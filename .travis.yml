@@ -1,0 +1,21 @@
+language: objective-c
+osx_image: xcode8.2
+
+before_install:
+  - echo $TRAVIS_OS_NAME
+  - echo $LANG
+  - echo $LC_ALL
+
+script:
+  - mkdir osx && cd osx
+  - cmake -DCMAKE_TOOLCHAIN_FILE=../core/CMake/OSXToolchain.cmake ..
+  - make flatc
+  - cd ..
+  - mkdir ios && cd ios
+  - cmake -GXcode -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../core/CMake/iOSToolchain.cmake ..
+  - mkdir -p Project.xcodeproj/xcshareddata/xcschemes
+  - cp ../LTerminal.xcscheme Project.xcodeproj/xcshareddata/xcschemes
+  - xcodebuild -scheme LTerminal -project Project.xcodeproj -configuration Release
+
+after_success:
+  - echo "success"
