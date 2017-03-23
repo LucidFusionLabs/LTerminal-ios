@@ -19,3 +19,8 @@ script:
 
 after_success:
   - echo "success"
+
+after_failure:
+  - echo "failure"
+  - cat /Users/travis/build/LucidFusionLabs/term-ios/ios/core/imports/sqlcipher/src/sqlcipher-stamp/sqlcipher-configure-*.log
+  - cat /Users/travis/build/LucidFusionLabs/term-ios/ios/core/imports/sqlcipher/src/sqlcipher-stamp/sqlcipher-build-*.log
