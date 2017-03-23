@@ -6,9 +6,7 @@ before_install:
   - echo $LANG
   - echo $LC_ALL
   - brew update
-  - brew outdated xcproj || brew upgrade xcproj
-
-install: true
+  - brew install xcproj
 
 script:
   - mkdir osx && cd osx
