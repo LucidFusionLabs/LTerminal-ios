@@ -5,8 +5,9 @@ before_install:
   - echo $TRAVIS_OS_NAME
   - echo $LANG
   - echo $LC_ALL
-  - brew update
   - brew install xcproj
+
+install: true
 
 script:
   - mkdir osx && cd osx
