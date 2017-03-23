@@ -5,6 +5,10 @@ before_install:
   - echo $TRAVIS_OS_NAME
   - echo $LANG
   - echo $LC_ALL
+  - brew update
+  - brew outdated xcproj || brew upgrade xcproj
+
+install: true
 
 script:
   - mkdir osx && cd osx
@@ -15,6 +19,8 @@ script:
   - cmake -GXcode -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../core/CMake/iOSToolchain.cmake ..
   - mkdir -p Project.xcodeproj/xcshareddata/xcschemes
   - cp ../LTerminal.xcscheme Project.xcodeproj/xcshareddata/xcschemes
+  - xcproj touch Project.xcodeproj
+  - cd .. && pod install && cd ios
   - xcodebuild -scheme LTerminal -project Project.xcodeproj -configuration Release
 
 after_success:
@@ -22,5 +28,3 @@ after_success:
 
 after_failure:
   - echo "failure"
-  - cat /Users/travis/build/LucidFusionLabs/term-ios/ios/core/imports/sqlcipher/src/sqlcipher-stamp/sqlcipher-configure-*.log
-  - cat /Users/travis/build/LucidFusionLabs/term-ios/ios/core/imports/sqlcipher/src/sqlcipher-stamp/sqlcipher-build-*.log
