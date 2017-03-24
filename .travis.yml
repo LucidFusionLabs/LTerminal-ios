@@ -6,8 +6,6 @@ before_install:
   - echo $LANG
   - echo $LC_ALL
 
-install: true
-
 script:
   - wget https://dl.google.com/firebase/sdk/ios/3_14_0/Firebase-3.14.0.zip
   - unzip Firebase-3.14.0.zip
@@ -19,7 +17,7 @@ script:
   - cmake -GXcode -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../core/CMake/iOSToolchain.cmake ..
   - mkdir -p Project.xcodeproj/xcshareddata/xcschemes
   - cp ../LTerminal.xcscheme Project.xcodeproj/xcshareddata/xcschemes
-  - xcodebuild -scheme LTerminal -project Project.xcodeproj -configuration Release
+  - fastlane gym
 
 after_success:
   - echo "success"
