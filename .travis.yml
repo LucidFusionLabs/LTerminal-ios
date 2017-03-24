@@ -16,8 +16,10 @@ script:
   - mkdir ios && cd ios
   - cmake -GXcode -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../core/CMake/iOSToolchain.cmake ..
   - mkdir -p Project.xcodeproj/xcshareddata/xcschemes
+  - mkdir -p fastlane
   - cp ../LTerminal.xcscheme Project.xcodeproj/xcshareddata/xcschemes
-  - fastlane gym
+  - cp ../Fastfile fastlane
+  - fastlane
 
 after_success:
   - echo "success"
