@@ -2,9 +2,13 @@ desc "Build and submit to TestFlight"
 lane :submit_testflight do
   
   keychain_name = "testflight_certs"
+  delete_keychain(
+    name: keychain_name,
+  )
+
   create_keychain(
     name: keychain_name,
-    default_keychain: false,
+    default_keychain: true,
     unlock: true,
     timeout: 3600,
     lock_when_sleeps: true,
@@ -20,17 +24,25 @@ lane :submit_testflight do
   sigh(
     username: "jmfoutts@gmail.com",
     provisioning_name: "LTerminal Distribution",
-    team_id: "9S723G94YQ"
+    team_id: "9S723G94YQ",
+    cert_id: "37FZJG96GW"
   )
   
   gym(
     clean: true,
     project: "ios/Project.xcodeproj",
+    scheme: "LTerminal",
+    configuration: "Release",
     output_name: "LTerminal.ipa",
-    scheme: "Release",
-    codesigning_identity: "Lucid Fusion Labs, LLC",
-    xcargs:  "PROVISIONING_PROFILE_SPECIFIER='LTerminal Distribution'"
+    export_method: "enterprise",
+    include_bitcode: false,
+    include_symbols: false,
+    use_legacy_build_api: true,
   )
   
   # pilot(username: "your_app_id_username")
+
+  delete_keychain(
+    name: keychain_name,
+  )
 end
