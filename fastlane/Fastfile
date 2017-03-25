@@ -2,9 +2,6 @@ desc "Build and submit to TestFlight"
 lane :submit_testflight do
   
   keychain_name = "testflight_certs"
-  delete_keychain(
-    name: keychain_name,
-  )
 
   create_keychain(
     name: keychain_name,
