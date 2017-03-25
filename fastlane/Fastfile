@@ -1,10 +1,10 @@
 desc "Build and submit to TestFlight"
 lane :submit_testflight do
   
-  keychain_name = "certs"
+  keychain_name = "testflight_certs"
   create_keychain(
     name: keychain_name,
-    default_keychain: true,
+    default_keychain: false,
     unlock: true,
     timeout: 3600,
     lock_when_sleeps: true,
@@ -20,8 +20,7 @@ lane :submit_testflight do
   sigh(
     username: "jmfoutts@gmail.com",
     provisioning_name: "LTerminal Distribution",
-    team_id: "9S723G94YQ",
-    cert_id: "9S723G94YQ"
+    team_id: "9S723G94YQ"
   )
   
   gym(
