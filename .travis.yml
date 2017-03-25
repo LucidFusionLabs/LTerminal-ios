@@ -1,10 +1,12 @@
 language: objective-c
 osx_image: xcode8.2
-
 before_install:
   - echo $TRAVIS_OS_NAME
   - echo $LANG
   - echo $LC_ALL
+
+before_script:
+  - openssl aes-256-cbc -k $CERTIFICATE_PASSWORD -in fastlane/Certificates/distribution.p12.enc -d -a -out fastlane/Certificates/distribution.p12
 
 script:
   - wget https://dl.google.com/firebase/sdk/ios/3_14_0/Firebase-3.14.0.zip
@@ -16,13 +18,18 @@ script:
   - mkdir ios && cd ios
   - cmake -GXcode -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=../core/CMake/iOSToolchain.cmake ..
   - mkdir -p Project.xcodeproj/xcshareddata/xcschemes
-  - mkdir -p fastlane
   - cp ../LTerminal.xcscheme Project.xcodeproj/xcshareddata/xcschemes
-  - cp ../Fastfile fastlane
-  - fastlane
+  - cd ..
+  - fastlane submit_testflight
 
 after_success:
   - echo "success"
 
 after_failure:
   - echo "failure"
+
+env:
+  global:
+  - secure: lWxAjCiJzonaEDt0+Ru3X+AQE6pPF1VOmVISuMgfqnxvtmrckcy058I+9VUVqfjcBMyJO2YiMwwTI1qrvB3zFL+D82e23wAKgcFNFhY50ceSfyo7UPdoyaghWWlsAdeLwpOjeC2TF4c6tDazHfIAzKi8wO0HLm0sBDgPUBHOa1AZi/QUzv3W5gK7Q+2yDXXDNtWuexrHG57AmnptpWeDRambMos6kthlztQzrKe7drk1QFVBgcQWAflsCmAK/F6Gyx78kKRF5cq/OYhjH/hfjvgIeIJlNySrppca1OVtwMYauEvU6qF+rgJZhkTURtyY1M5ORkZCiZSFONx2lpF6tg8vHY5tv3/b+8Fr9okoNVC1lybqvb0MQyG0yJkBLC7b5UQ8iD9CTe3ZHBkLwsTQearCkcPKkzC7Xxu/GpNIvYklkoqX4iY+JMz2u5kshx2oaMynoI+OqOoN2dkk21pAkzb995uVgXGE7E/DbLl+xxDw6qZnop/Oa9lfzWHkYpmkcMbCoEBR2HaY3agjP4s0M4P6VR7CqyeG/xeSNUCf4tsPeU8SIzj9FX2lLnwWP0QPzUUyhEnSeN9com7BhHAJ33AqtdiSOcMlxYYb9MID0Y9FDmwBksqZCwMJJ/1XZlsnZyzxCEKH7xqRdm1LwdtX4A6IFYsdw8S6SEa+qP8G/VE=
+  - secure: bSaFlMDUv6wLpJFuZJDL+SHauk05rcizBD/MqV7CZa3B/TyC+cGn6dh5Q1DhpUu4a4dd1DnCUC1jh7re1KAf26v1gbrhlgosNFQt97oDJnFam44YqIfQ+iOB8HvH/BJqR00WJ3eoKgkDHQt0YQUa6eq53IceFiQWMJ3NQJ593sh7mjTapWD+R7BqfRFRj4ZB/1yd5MBpjH+3AgySSOn1Mq0BLzE33X/tayxE5bwXc1jiDewM84H53WJHHxSiEtFsAxeKQndhb7SvGrheIduN9WrHVHtQ46dxnGVWQeZ/4Y/utiSeGPlFW5Mq3NlmmRE7nc1MLy6ew2ABHDNT9IysZLXGujx/nvOK8WAar/jLLrdXZeMSkk2qSNl4MOD1xhdiPmL7HnnXvm0hhwZO0VxogjZokSOD3npHcyGjXc4QTobMyYoHC4wU+MWKG135eFRvXQPiteHjDY94tebwfSv6ySg3N/qHls1ye7jvexeotojNclFF/vcy+/eUfBR7VUrh7bApd9N5xEkxiJjUho0IsWQg42TkPvrPV3cC3420G2X4NL+B/L0dtXFlmq3aeUcXRno0/zyzyeWUhRemjbqwvESNoQYBTjpwFsaBScJhzTUnoG3O7fhPm5ElFZtiHPweO4uP0Ed476lqbq8EfUubaHu5y5bqML+NIzPnbP3IRd8=
+  - secure: LtxHnpZw8dqhu0sCra31mhxLojkJ0cq8YX6E2Szo1Bh/dKkghh27puhsIYBwQqzUAXp3VUEhsZY4OxKIneDU+xKcYczIO5g6p8Dwposz5m67iO721rVGQjWexoH9jrHpvz4tkw1f/UIFuUm5mh8aQwgHg2a53P/nIvmkjjDr9JarbjUdJOKNob/215iubdRVKHqCnc1OvJnJPJ6Yx3oIBLDh7kmae4ReRZ9/mARulhmDSGpkuGCb5jLR6phpst1Dgekt5Hfq7h+RhCFiWV0a0ktAnEPd5wv/K65NyeHhRFekszl6S3gemcGiKF6qnF3eLy7O5kqwp5kaWsLsFXKfDpTSaAkKS/KTKqeAcNixn0JFaMgYFsXUYgHYmymRi0DZpmHw3qYcigIvk9/tGSB4nuPqzxQ8Cwz5ZU+H0Zm/6XI0Nat/xFMAUsXy3aUjSBOOsPdZvP027kco027NM4coPdfv3t8FZSP1rYuuIu57TkLFjXTM/GUUEJca0MTXl8CkgZrKVMZkqnaJC/8r2zNpd/qLu2y4OUWGD02a1IFC2a8q+jgFFj0I/wDnEVKx3JWZ3WEIZgQHI5zvxgZrmqVSJ5CNKQa41OhI84W8f5jTk3ynzBLWjaQZa0vuNDmR2xTBFRxXkMwlU6eqjS+o/ZzcNb4DarOMt7KzKtRbmcNuTJo=

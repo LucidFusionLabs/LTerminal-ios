@@ -1,0 +1,37 @@
+desc "Build and submit to TestFlight"
+lane :submit_testflight do
+  
+  keychain_name = "certs"
+  create_keychain(
+    name: keychain_name,
+    default_keychain: true,
+    unlock: true,
+    timeout: 3600,
+    lock_when_sleeps: true,
+    password: SecureRandom.base64
+  )
+  
+  import_certificate(
+    certificate_path: "fastlane/Certificates/distribution.p12",
+    certificate_password: ENV["KEY_PASSWORD"],
+    keychain_name: keychain_name
+  )
+ 
+  sigh(
+    username: "jmfoutts@gmail.com",
+    provisioning_name: "LTerminal Distribution",
+    team_id: "9S723G94YQ",
+    cert_id: "9S723G94YQ"
+  )
+  
+  gym(
+    clean: true,
+    project: "ios/Project.xcodeproj",
+    output_name: "LTerminal.ipa",
+    scheme: "Release",
+    codesigning_identity: "Lucid Fusion Labs, LLC",
+    xcargs:  "PROVISIONING_PROFILE_SPECIFIER='LTerminal Distribution'"
+  )
+  
+  # pilot(username: "your_app_id_username")
+end
