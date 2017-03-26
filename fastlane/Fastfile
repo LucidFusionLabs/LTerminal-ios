@@ -1,6 +1,8 @@
 desc "Build and submit to TestFlight"
 lane :submit_testflight do
   
+  team_id = "9S723G94YQ"
+  cert_id = "37FZJG96GW"
   keychain_name = "testflight_certs"
   keychain_pw = SecureRandom.base64
 
@@ -23,8 +25,8 @@ lane :submit_testflight do
   sigh(
     username: "jmfoutts@gmail.com",
     provisioning_name: "LTerminal Distribution",
-    team_id: "9S723G94YQ",
-    cert_id: "37FZJG96GW"
+    team_id: team_id,
+    cert_id: cert_id
   )
   
   gym(
@@ -33,10 +35,9 @@ lane :submit_testflight do
     scheme: "LTerminal",
     configuration: "Release",
     output_name: "LTerminal.ipa",
-    export_method: "enterprise",
     include_bitcode: false,
     include_symbols: false,
-    use_legacy_build_api: true,
+    export_team_id: team_id
   )
   
   # pilot(username: "your_app_id_username")
