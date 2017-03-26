@@ -38,8 +38,4 @@ lane :submit_testflight do
   )
   
   # pilot(username: "your_app_id_username")
-
-  delete_keychain(
-    name: keychain_name,
-  )
 end
