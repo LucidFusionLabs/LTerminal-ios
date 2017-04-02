@@ -41,7 +41,7 @@ lane :submit_testflight do
   )
   
   pilot(
-    username: "LucidFusionLabs@gmail.com"
+    username: "LucidFusionLabs@gmail.com",
     skip_submission: true
   )
 end
