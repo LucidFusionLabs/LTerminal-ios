@@ -23,7 +23,7 @@ lane :submit_testflight do
   )
  
   sigh(
-    username: "jmfoutts@gmail.com",
+    username: "LucidFusionLabs@gmail.com",
     provisioning_name: "LTerminal Distribution",
     team_id: team_id,
     cert_id: cert_id
@@ -40,5 +40,8 @@ lane :submit_testflight do
     export_team_id: team_id
   )
   
-  # pilot(username: "your_app_id_username")
+  pilot(
+    username: "LucidFusionLabs@gmail.com"
+    skip_submission: true
+  )
 end
