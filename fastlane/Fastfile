@@ -36,7 +36,7 @@ lane :submit_testflight do
     configuration: "Release",
     output_name: "LTerminal.ipa",
     include_bitcode: false,
-    include_symbols: false,
+    include_symbols: true,
     export_team_id: team_id
   )
   
