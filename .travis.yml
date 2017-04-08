@@ -5,6 +5,7 @@ before_install:
   - echo $TRAVIS_OS_NAME
   - echo $LANG
   - echo $LC_ALL
+  - brew install xcproj
 
 before_script:
   - openssl aes-256-cbc -k $CERTIFICATE_PASSWORD -in fastlane/Certificates/distribution.p12.enc -d -a -out fastlane/Certificates/distribution.p12
@@ -23,6 +24,7 @@ script:
   - grep -v INSTALL_PATH Project.xcodeproj/project.pbxproj > Project.xcodeproj/project.pbxproj.new
   - mv Project.xcodeproj/project.pbxproj.new Project.xcodeproj/project.pbxproj
   - cd ..
+  - xcproj touch ios/Project.xcodeproj
   - core/script/AddFabricBuildPhaseToXcodeprojTarget.sh ios/Project.xcodeproj LTerminal
   - fastlane submit_testflight
 
