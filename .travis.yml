@@ -23,8 +23,8 @@ script:
   - cp ../LTerminal.xcscheme Project.xcodeproj/xcshareddata/xcschemes
   - grep -v INSTALL_PATH Project.xcodeproj/project.pbxproj > Project.xcodeproj/project.pbxproj.new
   - mv Project.xcodeproj/project.pbxproj.new Project.xcodeproj/project.pbxproj
+  - xcproj touch Project.xcodeproj
   - cd ..
-  - xcproj touch ios/Project.xcodeproj
   - core/script/AddFabricBuildPhaseToXcodeprojTarget.sh ios/Project.xcodeproj LTerminal
   - fastlane submit_testflight
 
