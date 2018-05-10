@@ -24,6 +24,7 @@ script:
   - grep -v INSTALL_PATH Project.xcodeproj/project.pbxproj > Project.xcodeproj/project.pbxproj.new
   - mv Project.xcodeproj/project.pbxproj.new Project.xcodeproj/project.pbxproj
   - xcproj touch Project.xcodeproj
+  - xcproj touch Project.xcodeproj
   - cd ..
   - core/script/AddFabricBuildPhaseToXcodeprojTarget.sh ios/Project.xcodeproj LTerminal
   - fastlane submit_testflight
