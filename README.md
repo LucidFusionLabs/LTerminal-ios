@@ -1,4 +1,4 @@
-## iOS LTerminal 1.34.1
+## iOS LTerminal 1.38.0
 <img style="float:left" src="icon.png" />
 
 [![Build Status](https://travis-ci.org/LucidFusionLabs/LTerminal-ios.svg?branch=master)](https://travis-ci.org/LucidFusionLabs/LTerminal-ios)
