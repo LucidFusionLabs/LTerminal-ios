@@ -26,6 +26,10 @@ script:
   - xcproj touch Project.xcodeproj
   - xcproj touch Project.xcodeproj
   - xcproj touch Project.xcodeproj
+  - xcproj touch Project.xcodeproj
+  - xcproj touch Project.xcodeproj
+  - xcproj touch Project.xcodeproj
+  - git diff
   - cd ..
   - core/script/AddFabricBuildPhaseToXcodeprojTarget.sh ios/Project.xcodeproj LTerminal
   - fastlane submit_testflight
