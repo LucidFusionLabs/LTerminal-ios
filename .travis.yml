@@ -5,6 +5,7 @@ before_install:
   - echo $TRAVIS_OS_NAME
   - echo $LANG
   - echo $LC_ALL
+  - pwd
   - brew install xcproj
 
 before_script:
@@ -23,9 +24,9 @@ script:
   - cp ../LTerminal.xcscheme Project.xcodeproj/xcshareddata/xcschemes
   - grep -v INSTALL_PATH Project.xcodeproj/project.pbxproj > Project.xcodeproj/project.pbxproj.new
   - mv Project.xcodeproj/project.pbxproj.new Project.xcodeproj/project.pbxproj
-  - xcproj touch Project.xcodeproj
-  - xcproj touch Project.xcodeproj
-  - xcproj touch Project.xcodeproj
+  - xcproj touch Project.xcodeproj || true
+  - xcproj touch Project.xcodeproj || true
+  - xcproj touch Project.xcodeproj || true
   - xcproj touch Project.xcodeproj
   - cd ..
   - core/script/AddFabricBuildPhaseToXcodeprojTarget.sh ios/Project.xcodeproj LTerminal
@@ -36,6 +37,14 @@ after_success:
 
 after_failure:
   - echo "failure"
+
+deploy:
+  provider: releases
+  api_key:
+    secure: ZI34g/athYeEOMD0ul9+zcHqX1LrmX1lqo34BsON/qUGV2WkYfCeLs2vMsVqSEWnr4XutPXF9lHy8uV+oHsB99Ley4rNA8jYd5b87zP2JAqVd9knpET5y+QXoXEOVOZGRxfiZ2lk8So58ATPfBDJm4BCjQ2o4vN0dJoHbxJnqOlpZSEFtHQfj4j/h+VSWO9EPHy+emrk4I9MeCO8yz6+Ii/k+DO9lVygnEZIPIUwCMTcA4IpMlN2K6iiBc2OdNhCsses0wrTXjjk3m9fvI3rqg5Fc6mUP2+SYEy2ifppWVOuEdUnaQIQZNVsMjE2r8YSjutKVOjvY2w4BzWN8L+7pyzItkp/ktZhYSX2cUCydrKftBGssaCgQoVUxPpS9nT2AoeFCgeo0q1FcYxmtP0AMfK1shSZttvTnDqa7quI7VaJ4mFDn+MyxsyC+XlKeUgImadw8WuhcaOKlyl/7RDX9QnZY9EvZgXaKk4EudFJbYygPaT3nsAHfuk4hRrs5M7ffsVZrGI02owcrBsWf8tXVcHLUqkuYFd+ffDR2E4GJ3BqTcwrpnd1kDZiGdlrr92yQBxJqGLgwHcx84ON/Qmg6FVtOUP0AzcMzP8YBqe930qB3WLGjWAATSnSY6dgdWjwE1anv1R1PAmxflTvkbXn7+WFFMRz91yU+sTD0AUHzxc=
+  file: "LTerminal.ipa"
+  on:
+    tags: true
 
 env:
   global:
