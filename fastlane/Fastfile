@@ -2,7 +2,7 @@ desc "Build and submit to TestFlight"
 lane :submit_testflight do
   
   team_id = "9S723G94YQ"
-  cert_id = "37FZJG96GW"
+  cert_id = "Y6TW532U2V"
   keychain_name = "testflight_certs"
   keychain_pw = SecureRandom.base64
 
